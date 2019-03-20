@@ -238,8 +238,18 @@ class MockResponse implements ResponseInterface
 
         // populate info related to headers
         $info = $mock->getInfo() ?: [];
+        $rawHeaders = [];
+
+        foreach ($info['raw_headers'] ?? [] as $k => $v) {
+            if (\is_string($k)) {
+                $v = $k.': '.$v;
+            }
+
+            $rawHeaders[] = $v;
+        }
+
         $response->info['http_code'] = ($info['http_code'] ?? 0) ?: $mock->getStatusCode(false) ?: 200;
-        $response->addRawHeaders($info['raw_headers'] ?? [], $response->info, $response->headers);
+        $response->addRawHeaders($rawHeaders, $response->info, $response->headers);
         $dlSize = (int) ($response->headers['content-length'][0] ?? 0);
 
         $response->info = [

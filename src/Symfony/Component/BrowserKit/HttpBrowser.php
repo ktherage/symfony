@@ -28,8 +28,10 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  * to make real HTTP requests.
  *
  * @author Fabien Potencier <fabien@symfony.com>
+ *
+ * @final
  */
-final class HttpBrowser extends AbstractBrowser
+class HttpBrowser extends AbstractBrowser
 {
     private $client;
     private $store;
